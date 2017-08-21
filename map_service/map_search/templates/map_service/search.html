@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Адресный поиск</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css"
+          integrity="sha512-M2wvCLH6DSRazYeZRIm1JnYyh22purTM+FDB5CsyxtQJYeKq83arPe5wgbNmcFXGqiSH2XR8dT/fJISVA1r/zQ=="
+          crossorigin=""/>
+    <!-- Make sure you put this AFTER Leaflet's CSS -->
+    <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"
+            integrity="sha512-lInM/apFSqyy1o6s89K4iQUKg6ppXEgsVxT35HbzUupEVRh2Eu9Wdl4tHj7dZO0s1uvplcYGmt3498TtHq+log=="
+            crossorigin=""></script>
+
+
+    <style>#map { height: 500px; }</style>
+</head>
+<body>
+<h1>Введите адрес для поиска</h1>
+<form action="/search/" method="get" enctype="text/plain">
+    <p><input name="adress" type="text"></p>
+    <p><input type="submit" value="Поиск адреса"></p>
+
+</form>
+
+<p> Координаты: {{y}}  {{x}}  </p>
+<p> Найдено сервисом: {{service}}</p>
+
+ <div id="map"></div>
+
+
+
+<script type="text/javascript">
+
+var xMark = {{x}};
+var yMark = {{y}};
+var serv = '{{service}}';
+
+
+ var map = L.map('map').setView([yMark, xMark], 10);
+
+
+ L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+     attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+ }).addTo(map);
+
+ var marker = L.marker([yMark, xMark]).addTo(map).bindPopup('{{x}} {{y}}<br><b>{{service}}</b>').openPopup();
+
+</script>
+
+</body>
+</html>
