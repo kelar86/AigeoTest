@@ -1,28 +1,17 @@
-from map_search import request_handler
-from map_search import response_parser
+from map_search import enisey_gis
+from map_search import yandex_map
 
-MAP_SERVICES = ["ЕнисейГис", "YandexMap"]
+MAP_SERVICES = [enisey_gis, yandex_map]
 
 
 def search(adress):
     for service in MAP_SERVICES:
-        srch = request_api(adress, service)
 
-        if search_is_ok(srch, service):
-            result = get_coordinate(srch, service)
+        srch = service.request(adress)
+
+        if service.search_is_ok(srch):
+            result = service.parse(srch)
             if result is not None:
                 return result
     return None
-
-
-def request_api(adress, service):
-    return request_handler.request(adress, service)
-
-
-def search_is_ok(result_xml, service):
-    return response_parser.check_have_result(result_xml, service)
-
-
-def get_coordinate(response_xml, service):
-    return response_parser.parse(response_xml, service)
 
