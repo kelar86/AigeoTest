@@ -11,6 +11,6 @@
 
 Старт:
 
-    $ cd cd map_service/
+    $ cd map_service/
 
     $ docker-compose up
